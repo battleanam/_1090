@@ -142,8 +142,11 @@ public class _1090DataSource extends _1090Log implements _1090DataBase{
             return connection;
         } catch (ClassNotFoundException e) {
             error("ClassNotFoundException","数据库驱动加载失败");
+            log(e.getMessage());
         } catch (SQLException e) {
             error("SQLException","无法连接到数据库 \""+this.getUrl()+"\" , 用户名: "+ this.username+" 密码: "+this.password);
+            log(e.getMessage());
+            e.printStackTrace();
         }
         return null;
     }
@@ -161,8 +164,10 @@ public class _1090DataSource extends _1090Log implements _1090DataBase{
             in.close();
         } catch (FileNotFoundException e) {
             error("FileNotFoundException","未找到文件 \"dbDriver.properties\"");
+            log(e.getMessage());
         } catch (IOException e) {
             error("IOException","无法从文件 \"dbDriver.properties\" 中加载配置信息");
+            log(e.getMessage());
         }
     }
 
@@ -180,8 +185,10 @@ public class _1090DataSource extends _1090Log implements _1090DataBase{
             in.close();
         } catch (FileNotFoundException e) {
             error("未找到文件 \"dbUrlPrefix.properties\"");
+            log(e.getMessage());
         } catch (IOException e) {
             error("无法从文件 \"dbUrlPrefix.properties\" 中加载配置信息");
+            log(e.getMessage());
         }
     }
 
@@ -199,8 +206,10 @@ public class _1090DataSource extends _1090Log implements _1090DataBase{
             in.close();
         } catch (FileNotFoundException e) {
             error("未找到文件 \"dbDefaultPort.properties\"");
+            log(e.getMessage());
         } catch (IOException e) {
             error("无法从文件 \"dbDefaultPort.properties\" 中加载配置信息");
+            log(e.getMessage());
         }
     }
 
