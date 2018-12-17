@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.nan.moon</groupId>
+    <artifactId>1090</artifactId>
+    <version>0.1.0</version>
+    <modules>
+        <module>service</module>
+        <module>web</module>
+        <module>dao</module>
+        <module>util</module>
+    </modules>
+    <packaging>pom</packaging>
+
+</project>
