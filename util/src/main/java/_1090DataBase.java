@@ -4,19 +4,36 @@
  */
 public interface _1090DataBase {
     /**
+     * 获取数据库的驱动路径
+     *
+     * @return
+     */
+    public String getDriver();
+
+    /**
+     * 获取当前连接数据库的URL
+     *
+     * @return
+     */
+    public String getUrl();
+
+    /**
      * 配置驱动类型 结合数据库类型匹配数据库驱动
+     *
      * @param driverType 驱动类型 目前可选值: "jdbc"
      */
     public void setDriverType(String driverType);
 
     /**
      * 配置数据库类型 自动匹配URL前缀 结合驱动类型匹配数据库驱动
+     *
      * @param dbType 数据库类型 目前可选值："mysql" "mariadb" "sqlserver" "oracle" "postgresql"
      */
     public void setDbType(String dbType);
 
     /**
      * 配置主机名
+     *
      * @param hostName
      */
     public void setHostName(String hostName);
@@ -24,24 +41,28 @@ public interface _1090DataBase {
     /**
      * 配置端口
      * 如果参数是int类型 判别为端口号 如果参数为String类型 派别为数据库类型 设置端口为默认端口号
-    * @param param 可以使用两种类型 "int" "string"
+     *
+     * @param param 可以使用两种类型 "int" "string"
      */
     public void setPort(Object param);
 
     /**
      * 配置数据库名称
+     *
      * @param dataBase
      */
     public void setDataBase(String dataBase);
 
     /**
      * 配置用于连接的用户名
+     *
      * @param username
      */
     public void setUsername(String username);
 
     /**
      * 配置用于连接的用户的密码
+     *
      * @param password
      */
     public void setPassword(String password);

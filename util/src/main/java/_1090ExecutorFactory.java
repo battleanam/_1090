@@ -3,7 +3,7 @@ import java.io.InputStream;
 import java.util.Enumeration;
 import java.util.Properties;
 
-public class _1090ExecutorFactory implements ExecutorFactory{
+public class _1090ExecutorFactory implements ExecutorFactory {
     /**
      * 创建一个原始SQL执行工具
      *
@@ -45,23 +45,23 @@ public class _1090ExecutorFactory implements ExecutorFactory{
         _1090Executor executor = null;
         try {
             properties.load(in);
-            executor = properties.containsKey("dbType")?new _1090Executor():new _1090Executor(properties.getProperty("dbType"));
-            if(properties.containsKey("driveType")){
+            executor = properties.containsKey("dbType") ? new _1090Executor() : new _1090Executor(properties.getProperty("dbType"));
+            if (properties.containsKey("driveType")) {
                 executor.setDriverType(properties.getProperty("driveType"));
             }
-            if(properties.containsKey("hostName")){
+            if (properties.containsKey("hostName")) {
                 executor.setHostName(properties.getProperty("hostName"));
             }
-            if(properties.containsKey("port")){
+            if (properties.containsKey("port")) {
                 executor.setPort(properties.getProperty("port"));
             }
-            if(properties.containsKey("dataBase")){
+            if (properties.containsKey("dataBase")) {
                 executor.setDataBase(properties.getProperty("dataBase"));
             }
-            if(properties.containsKey("username")){
+            if (properties.containsKey("username")) {
                 executor.setUsername(properties.getProperty("username"));
             }
-            if(properties.containsKey("password")){
+            if (properties.containsKey("password")) {
                 executor.setPassword(properties.getProperty("password"));
             }
         } catch (IOException e) {

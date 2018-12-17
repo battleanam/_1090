@@ -6,9 +6,10 @@ import java.util.Properties;
 
 /**
  * 数据源
+ *
  * @author _1090
  */
-public class _1090DataSource extends _1090Log implements _1090DataBase{
+public class _1090DataSource extends _1090Log implements _1090DataBase {
     /**
      * 数据库驱动资源文件
      */
@@ -49,10 +50,11 @@ public class _1090DataSource extends _1090Log implements _1090DataBase{
      * 密码
      */
     private String password;
+
     /**
      * 构造器
      */
-    private _1090DataSource(){
+    private _1090DataSource() {
         log("初始化数据库连接工具...");
         this.initDbUrlPrefixProperties();
         this.initDriverProperties();
@@ -62,9 +64,10 @@ public class _1090DataSource extends _1090Log implements _1090DataBase{
 
     /**
      * 构造器
+     *
      * @param dbType 数据库类型
      */
-    private _1090DataSource(String dbType){
+    private _1090DataSource(String dbType) {
         log("初始化数据库连接工具...");
         this.initDbUrlPrefixProperties();
         this.initDriverProperties();
@@ -78,12 +81,13 @@ public class _1090DataSource extends _1090Log implements _1090DataBase{
 
     /**
      * 构造器
+     *
      * @param driverType 数据库驱动类型
-     * @param dbType 数据库类型
-     * @param hostName 主机名
-     * @param port 数据库占用端口
+     * @param dbType     数据库类型
+     * @param hostName   主机名
+     * @param port       数据库占用端口
      */
-    private _1090DataSource(String driverType, String dbType, String hostName, Object port){
+    private _1090DataSource(String driverType, String dbType, String hostName, Object port) {
         log("初始化数据库连接工具...");
         this.initDbUrlPrefixProperties();
         this.initDriverProperties();
@@ -97,39 +101,43 @@ public class _1090DataSource extends _1090Log implements _1090DataBase{
 
     /**
      * 构建一个原始数据源，不可以直接使用，需要对各项进行配置
+     *
      * @return
      */
-    public static _1090DataSource buildDataSource(){
+    public static _1090DataSource buildDataSource() {
         return new _1090DataSource();
     }
 
     /**
      * 构建一个默认数据源，提供数据库类型，默认驱动类型为“JDBC”、主机名为“localhost”、数据库占用端口为默认端口
+     *
      * @param dbType 数据库类型
      * @return
      */
-    public static _1090DataSource buildDataSource(String dbType){
+    public static _1090DataSource buildDataSource(String dbType) {
         return new _1090DataSource(dbType);
     }
 
     /**
      * 构建一个数据源
+     *
      * @param driverType 数据库驱动类型
-     * @param dbType 数据库类型
-     * @param hostName 主机名
-     * @param port 数据库占用端口
+     * @param dbType     数据库类型
+     * @param hostName   主机名
+     * @param port       数据库占用端口
      * @return
      */
-    public static _1090DataSource buildDataSource(String driverType, String dbType, String hostName, Object port){
-        return new _1090DataSource(driverType,dbType,hostName,port);
+    public static _1090DataSource buildDataSource(String driverType, String dbType, String hostName, Object port) {
+        return new _1090DataSource(driverType, dbType, hostName, port);
     }
 
     /**
      * 连接数据库 使用之前需要配置用户名、密码
+     *
      * @param dataBase 要连接的数据库
      * @return 返回一个到dataBase的连接
      */
-    public Connection connect(String dataBase){
+    public Connection connect(String dataBase) {
         this.setDataBase(dataBase);
         try {
             Class.forName(this.getDriver());
@@ -138,18 +146,19 @@ public class _1090DataSource extends _1090Log implements _1090DataBase{
                     this.username,
                     this.password
             );
-            log("建立与数据库 \""+this.getUrl()+"\" 的连接");
+            log("建立与数据库 \"" + this.getUrl() + "\" 的连接");
             return connection;
         } catch (ClassNotFoundException e) {
-            error("ClassNotFoundException","数据库驱动加载失败");
+            error("ClassNotFoundException", "数据库驱动加载失败");
             log(e.getMessage());
         } catch (SQLException e) {
-            error("SQLException","无法连接到数据库 \""+this.getUrl()+"\" , 用户名: "+ this.username+" 密码: "+this.password);
+            error("SQLException", "无法连接到数据库 \"" + this.getUrl() + "\" , 用户名: " + this.username + " 密码: " + this.password);
             log(e.getMessage());
             e.printStackTrace();
         }
         return null;
     }
+
     /**
      * 加载数据库驱动资源
      */
@@ -163,16 +172,16 @@ public class _1090DataSource extends _1090Log implements _1090DataBase{
             log("数据库驱动资源加载完成");
             in.close();
         } catch (FileNotFoundException e) {
-            error("FileNotFoundException","未找到文件 \"dbDriver.properties\"");
+            error("FileNotFoundException", "未找到文件 \"dbDriver.properties\"");
             log(e.getMessage());
         } catch (IOException e) {
-            error("IOException","无法从文件 \"dbDriver.properties\" 中加载配置信息");
+            error("IOException", "无法从文件 \"dbDriver.properties\" 中加载配置信息");
             log(e.getMessage());
         }
     }
 
     /**
-     *  加载数据库URL资源
+     * 加载数据库URL资源
      */
     private void initDbUrlPrefixProperties() {
         try {
@@ -193,7 +202,7 @@ public class _1090DataSource extends _1090Log implements _1090DataBase{
     }
 
     /**
-     *  加载数据库默认端口资源
+     * 加载数据库默认端口资源
      */
     private void initDbDefaultPortProperties() {
         try {
@@ -215,12 +224,13 @@ public class _1090DataSource extends _1090Log implements _1090DataBase{
 
     /**
      * 获取数据源当前使用的驱动
+     *
      * @return 返回一个驱动类的完全限定名
      */
-    public String getDriver(){
-        String driverUrl = this.driverProperties.getProperty(this.getDriverType()+"."+this.getDbType());
-        if (driverUrl==null) {
-            error("未匹配到 \""+ this.getDbType() +"\" 的默认 \""+ this.getDriverType() +"\" 驱动");
+    public String getDriver() {
+        String driverUrl = this.driverProperties.getProperty(this.getDriverType() + "." + this.getDbType());
+        if (driverUrl == null) {
+            error("未匹配到 \"" + this.getDbType() + "\" 的默认 \"" + this.getDriverType() + "\" 驱动");
             return "";
         }
         return driverUrl;
@@ -228,15 +238,17 @@ public class _1090DataSource extends _1090Log implements _1090DataBase{
 
     /**
      * 获取最后一次连接数据库的URL
+     *
      * @return
      */
-    public String getUrl(){
-        String urlPrefix = this.dbUrlPrefixProperties.getProperty(this.getDriverType()+"."+this.getDbType());
-        return  urlPrefix + this.hostName+":"+this.port+"/"+dataBase;
+    public String getUrl() {
+        String urlPrefix = this.dbUrlPrefixProperties.getProperty(this.getDriverType() + "." + this.getDbType());
+        return urlPrefix + this.hostName + ":" + this.port + "/" + dataBase;
     }
 
     /**
      * 获取驱动类型
+     *
      * @return
      */
     public String getDriverType() {
@@ -245,6 +257,7 @@ public class _1090DataSource extends _1090Log implements _1090DataBase{
 
     /**
      * 配置驱动类型 结合数据库类型匹配数据库驱动
+     *
      * @param driverType 驱动类型 目前可选值: "jdbc"
      */
     public void setDriverType(String driverType) {
@@ -253,6 +266,7 @@ public class _1090DataSource extends _1090Log implements _1090DataBase{
 
     /**
      * 获取当前数据源的数据库类型
+     *
      * @return
      */
     public String getDbType() {
@@ -261,6 +275,7 @@ public class _1090DataSource extends _1090Log implements _1090DataBase{
 
     /**
      * 配置数据库类型 自动匹配URL前缀 结合驱动类型匹配数据库驱动
+     *
      * @param dbType 数据库类型 目前可选值："mysql" "mariadb" "sqlserver" "oracle" "postgresql"
      */
     public void setDbType(String dbType) {
@@ -269,6 +284,7 @@ public class _1090DataSource extends _1090Log implements _1090DataBase{
 
     /**
      * 获取当前连接的主机名
+     *
      * @return
      */
     public String getHostName() {
@@ -277,6 +293,7 @@ public class _1090DataSource extends _1090Log implements _1090DataBase{
 
     /**
      * 配置主机名
+     *
      * @param hostName
      */
     public void setHostName(String hostName) {
@@ -285,15 +302,16 @@ public class _1090DataSource extends _1090Log implements _1090DataBase{
 
     @Override
     public void setPort(Object param) {
-        if(param instanceof String){
+        if (param instanceof String) {
             setPort((String) param);
-        }else if(param instanceof Integer){
+        } else if (param instanceof Integer) {
             setPort((Integer) param);
         }
     }
 
     /**
      * 获取最后一次连接数据库的端口号
+     *
      * @return
      */
     public Integer getPort() {
@@ -302,6 +320,7 @@ public class _1090DataSource extends _1090Log implements _1090DataBase{
 
     /**
      * 配置端口
+     *
      * @param port
      */
     public void setPort(Integer port) {
@@ -310,16 +329,18 @@ public class _1090DataSource extends _1090Log implements _1090DataBase{
 
     /**
      * 根据数据库类型配置默认端口
+     *
      * @param dbType
      */
     public void setPort(String dbType) {
         String port = this.dbDefaultPortProperties.getProperty(dbType);
-        if(port == null) error("未匹配到数据库类型 \"" + dbType + "\" 的默认端口");
+        if (port == null) error("未匹配到数据库类型 \"" + dbType + "\" 的默认端口");
         else this.setPort(Integer.parseInt(port));
     }
 
     /**
      * 获取数据库名称
+     *
      * @return
      */
     public String getDataBase() {
@@ -328,6 +349,7 @@ public class _1090DataSource extends _1090Log implements _1090DataBase{
 
     /**
      * 配置数据库名称
+     *
      * @param dataBase
      */
     public void setDataBase(String dataBase) {
@@ -336,6 +358,7 @@ public class _1090DataSource extends _1090Log implements _1090DataBase{
 
     /**
      * 获取用于连接的用户名
+     *
      * @return
      */
     public String getUsername() {
@@ -344,6 +367,7 @@ public class _1090DataSource extends _1090Log implements _1090DataBase{
 
     /**
      * 配置用于连接的用户名
+     *
      * @param username
      */
     public void setUsername(String username) {
@@ -352,6 +376,7 @@ public class _1090DataSource extends _1090Log implements _1090DataBase{
 
     /**
      * 配置用于连接的用户的密码
+     *
      * @param password
      */
     public void setPassword(String password) {
